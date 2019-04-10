@@ -1,12 +1,9 @@
 <addon id="skin.aeon.tajo" name="Aeon Tajo" provider-name="manfeed" version="1.4.9">
 	<requires>
 		<import addon="xbmc.gui" version="5.14.0" />
-		<import addon="script.grab.fanart" version="0.12.8" />
 		<import addon="script.skinshortcuts" version="0.4.5" />
 		<import addon="service.library.data.provider" version="0.0.7" />
-		<import addon="resource.images.studios.white" version="0.0.1" />
-		<import addon="resource.images.recordlabels.white" version="0.0.1" />
-		<import addon="script.check.theme" version="0.0.1" />
+		
 	</requires>
 	<extension debugging="false" effectslowdown="0.75" point="xbmc.gui.skin">
 		<res aspect="16:9" default="true" folder="1080i" height="1080" width="1920" />

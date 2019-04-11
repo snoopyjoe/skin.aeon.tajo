@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
 
-	<onload condition="Skin.HasSetting(StartVideo)">AlarmClock(StartupDelay,PlayMedia($INFO[Skin.String(StartVideo)]),00:00,silent)</onload>
+	<onload condition="!String.IsEmpty(Skin.String(StartVideo))">AlarmClock(StartupDelay,PlayMedia($INFO[Skin.String(StartVideo)]),00:00,silent)</onload>
 	<onload condition="Skin.HasSetting(playTheme)">RunScript(script.check.theme)</onload>
 	<onload condition="System.HasAddon(script.favourites)">RunScript(script.favourites)</onload>
 	<onload condition="!System.HasAddon(script.tv.show.next.aired)">Skin.SetBool(Disable.NextAired)</onload>

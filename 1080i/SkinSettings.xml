@@ -79,6 +79,16 @@
 						<onclick>noop</onclick>
 						<icon />
 					</item>
+					<item id="3">
+						<label>Startup</label>
+						<onclick>noop</onclick>
+						<icon />
+					</item>
+					<item id="4">
+						<label>Display</label>
+						<onclick>noop</onclick>
+						<icon />
+					</item>
 				</content>
 			</control>
 			<control type="image">
@@ -292,17 +302,6 @@
 						<selected>false</selected>
 						<visible>!System.HasAddon(script.tv.show.next.aired)</visible>
 					</control>
-					<control type="radiobutton" id="304">
-						<width>1316</width>
-						<height>90</height>
-						<textoffsetx>30</textoffsetx>
-						<font>font15</font>
-						<label>$LOCALIZE[31121]</label>
-						<onclick condition="System.HasAddon(plugin.program.autocompletion)">Skin.ToggleSetting(Disable.Autocomplete)</onclick>
-						<onclick condition="!System.HasAddon(plugin.program.autocompletion)">InstallAddon(plugin.program.autocompletion)</onclick>
-						<selected>Skin.HasSetting(Disable.Autocomplete) | !System.HasAddon(plugin.program.autocompletion)</selected>
-						<visible>System.HasAddon(plugin.program.autocompletion)</visible>
-					</control>
 					<control type="button" id="300">
 						<width>1316</width>
 						<height>90</height>
@@ -339,7 +338,16 @@
 						<onclick>Skin.Reset(MusicGenreFanartPath)</onclick>
 						<visible>!String.IsEmpty(Skin.String(MusicGenreFanartPath))</visible>
 					</control>
-				</control>
+					<control type="button" id="304">
+						<width>1316</width>
+						<height>90</height>
+						<textoffsetx>30</textoffsetx>
+						<font>font15</font>
+						<label>Choose Bootup Video</label>
+						<label2>[COLOR themecolor]$INFO[Skin.String(StartVideo)][/COLOR]</label2>
+						<onclick>Skin.SetFile(StartVideo,.mp4|.avi|.wmv|.mov|.flv)</onclick>
+					</control>
+			</control>
 				<control type="grouplist" id="9004">
 					<description>control area</description>
 					<left>522</left>

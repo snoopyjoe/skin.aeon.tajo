@@ -138,10 +138,10 @@
 					<visible>String.IsEqual(Container(9000).ListItem.Property(WidgetType),1) | String.IsEqual(Container(9000).ListItem.Property(WidgetType),2) | String.IsEqual(Container(9000).ListItem.Property(WidgetType),3) | String.IsEqual(Container(9000).ListItem.Property(WidgetType),4) | String.IsEqual(Container(9000).ListItem.Property(WidgetType),5) | String.IsEqual(Container(9000).ListItem.Property(WidgetType),6) | String.IsEqual(Container(9000).ListItem.Property(WidgetType),12) | String.IsEqual(Container(9000).ListItem.Property(WidgetType),13)</visible>
 					<visible>[Control.HasFocus(9000) | Control.HasFocus(9004) | Control.HasFocus(9003) | Control.HasFocus(9010)] + !Skin.HasSetting(showWidget)</visible>
 					<animation effect="fade" start="40" end="0" time="1200" pulse="true" condition="true">Conditional</animation>
-						<top>36</top>
-						<left>1882</left>
-						<width>42</width>
-						<height>29</height>
+						<top>10</top>
+						<left>950</left>
+						<width>75</width>
+						<height>62</height>
 						<aspectratio aligny="bottom" align="left">keep</aspectratio>
 						<texture background="true">arrow_up.png</texture>
 					</control>

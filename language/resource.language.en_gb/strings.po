@@ -517,7 +517,7 @@ msgstr ""
 
 #: \1080i\variables.xml:394
 msgctxt "#31122"
-msgid "Disables the autocomplete feature of the virtual keyboard"
+msgid "Adds a bootup video after Kodi login "
 msgstr ""
 
 #: \1080i\variables.xml:638

@@ -202,6 +202,15 @@
 						<onclick>Skin.ToggleSetting(Disable.FanartTitle)</onclick>
 						<selected>!Skin.HasSetting(Disable.FanartTitle)</selected>
 					</control>
+					<control type="button" id="104">
+						<width>1316</width>
+						<height>90</height>
+						<textoffsetx>30</textoffsetx>
+						<font>font15</font>
+						<label>Choose Bootup Video</label>
+						<label2>[COLOR themecolor]$INFO[Skin.String(StartVideo)][/COLOR]</label2>
+						<onclick>Skin.SetFile(StartVideo,.mp4|.avi|.wmv|.mov|.flv)</onclick>
+					</control>
 				</control>
 				<control type="grouplist" id="9002">
 					<description>control area</description>

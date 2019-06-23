@@ -2,7 +2,6 @@
 	<requires>
 		<import addon="xbmc.gui" version="5.14.0" />
 		<import addon="script.skinshortcuts" version="0.4.5" />
-		<import addon="service.library.data.provider" version="0.0.7" />
 		
 	</requires>
 	<extension debugging="false" effectslowdown="0.75" point="xbmc.gui.skin">

@@ -11,6 +11,7 @@
 	<include file="Includes_Widgets.xml" />
 	<include file="Includes_VideoLyrics.xml" />
 	<include file="View_50_List.xml" />
+	<include file="View_585_Discog.xml" />
 	<include file="View_592_Wall.xml" />
 	<include file="View_591_Triple3Dm.xml" />
 	<include file="View_595_Shelf3D.xml" />
@@ -86,6 +87,13 @@
 			<onfocus condition="!Integer.IsGreater(Container(587).Row,0) + Integer.IsGreater(Container(587).CurrentItem,17)">Control.Move(587,1)</onfocus>
 			<onfocus condition="Integer.IsGreater(Container(587).Row,1) + !String.IsEmpty(Container(587).ListItemNoWrap(17).Label)">Control.Move(587,1)</onfocus>
 			<onfocus condition="Integer.IsGreater(Container(587).Row,1) + !String.IsEmpty(Container(587).ListItemNoWrap(17).Label)">Control.Move(587,-1)</onfocus>
+		</control>
+	</include>
+	<include name="Button_Disc">
+		<control type="button" id="5477">
+			<include>HiddenObject</include>
+			<onfocus condition="!Integer.IsGreater(Container(5850).Row,0) + Integer.IsGreater(Container(5850).CurrentItem,4) + Integer.IsGreater(Container(5850).NumItems,12)">Action(Up)</onfocus>
+			<onfocus condition="!Integer.IsGreater(Container(5850).Row,0) + Integer.IsGreater(Container(5850).CurrentItem,4) + Integer.IsGreater(Container(5850).NumItems,12)">Action(Down)</onfocus>
 		</control>
 	</include>
 	<include name="Button_MW3D">
@@ -435,7 +443,7 @@
 			</itemlayout>
 			<focusedlayout>
 			</focusedlayout>
-			<content target="video">plugin://script.embuary.helper?info=getcast&amp;type=$INFO[ListItem.DBType]&amp;dbid=$INFO[ListItem.DBID]</content>
+			<content target="video">$VAR[getDBIDcontent2]</content>
 		</control>
 	</include>
 	<include name="DisplayPngCast">
@@ -454,13 +462,18 @@
 				<content>plugin://script.embuary.helper/?info=getresourceimages&amp;addon=resource.images.actorart&amp;string='$ESCINFO[Container(5951).ListItem.Cast]'</content>
 			</control>
 			<control type="list" id="534">
-				<scrolltime>4000</scrolltime>
+				<scrolltime>5000</scrolltime>
 				<autoscroll>true</autoscroll>
 				<itemlayout>
 				</itemlayout>
 				<focusedlayout>
 				</focusedlayout>
 				<content>
+					<item>
+						<label>[B][COLOR themecolor]$LOCALIZE[206]:[/B][/COLOR][CR][COLOR white]$INFO[Container(524).ListItemAbsolute(0).Label][CR]$INFO[Container(524).ListItemAbsolute(1).Label][CR]$INFO[Container(524).ListItemAbsolute(2).Label][CR]$INFO[Container(524).ListItemAbsolute(3).Label][CR]$INFO[Container(524).ListItemAbsolute(4).Label][CR]$INFO[Container(524).ListItemAbsolute(5).Label][CR]$INFO[Container(524).ListItemAbsolute(6).Label][CR]$INFO[Container(524).ListItemAbsolute(7).Label][CR]$INFO[Container(524).ListItemAbsolute(8).Label][CR]$INFO[Container(524).ListItemAbsolute(9).Label][/COLOR]</label>
+						<label2>Cast</label2>
+						<visible>!Control.IsVisible(596) + !Control.IsVisible(589)</visible>
+					</item>
 					<item>
 						<label>$INFO[Container(5952).ListItemAbsolute(0).Label]</label>
 						<label2>$INFO[Container(5952).ListItemAbsolute(0).Icon]</label2>
@@ -520,11 +533,6 @@
 						<label>$INFO[Container(5952).ListItemAbsolute(11).Label]</label>
 						<label2>$INFO[Container(5952).ListItemAbsolute(11).Icon]</label2>
 						<visible>!String.IsEmpty(Container(5952).ListItemAbsolute(11).Icon)</visible>
-					</item>
-					<item>
-						<label>[B][COLOR themecolor]$LOCALIZE[206]:[/B][/COLOR][CR][COLOR white]$INFO[Container(524).ListItemAbsolute(0).Label][CR]$INFO[Container(524).ListItemAbsolute(1).Label][CR]$INFO[Container(524).ListItemAbsolute(2).Label][CR]$INFO[Container(524).ListItemAbsolute(3).Label][CR]$INFO[Container(524).ListItemAbsolute(4).Label][CR]$INFO[Container(524).ListItemAbsolute(5).Label][CR]$INFO[Container(524).ListItemAbsolute(6).Label][CR]$INFO[Container(524).ListItemAbsolute(7).Label][CR]$INFO[Container(524).ListItemAbsolute(8).Label][CR]$INFO[Container(524).ListItemAbsolute(9).Label][/COLOR]</label>
-						<label2>Cast</label2>
-						<visible>!Control.IsVisible(596) + !Control.IsVisible(589)</visible>
 					</item>
 				</content>
 			</control>
@@ -1086,7 +1094,7 @@
 						<effect type="slide" start="$PARAM[MWLeftSt],$PARAM[MWTopSt]" end="0,0" delay="1000" time="$PARAM[MWTim]" tween="cubic" easing="inout" />
 						<effect type="fade" start="1" end="100" delay="$PARAM[MWFade]" time="250" />
 					</animation>
-					<visible>String.IsEmpty(Window(Home).Property(AnimWall2)) + String.IsEmpty(Window(Home).Property(MediaMenu))</visible>
+					<visible>String.IsEmpty(Window(Home).Property(AnimWall2)) + String.IsEmpty(Window(Home).Property(MediaMenu)) + String.IsEmpty(Window(Home).Property(HideWall))</visible>
 					<include>Animation_NewWallFloat_2</include>
 					<left>$PARAM[MWLeft]</left>
 					<top>$PARAM[MWTop]</top>
@@ -1094,23 +1102,6 @@
 					<height>310</height>
 					<texture background="true">$INFO[Container(587).ListItemNoWrap($PARAM[MWPos]).Icon]</texture>
 					<aspectratio aligny="bottom">stretch</aspectratio>
-				</control>
-				<control type="group">
-					<left>170</left>
-					<control type="image">
-						<animation type="Visible" reversible="false">
-							<effect type="slide" start="$PARAM[MWLeftSt],$PARAM[MWTopSt]" end="0,0" delay="1000" time="$PARAM[MWTim]" tween="cubic" easing="inout" />
-							<effect type="fade" start="1" end="100" delay="$PARAM[MWFade]" time="250" />
-						</animation>
-						<visible>!String.IsEmpty(Window(home).Property(MediaMovie9)) + String.IsEmpty(Window(Home).Property(AnimWall2)) + String.IsEmpty(Window(Home).Property(MediaMenu)) + String.IsEqual(Container(587).ListItemNoWrap($PARAM[MWPos]).Overlay,OverlayWatched.png)</visible>
-						<include>Animation_NewWallFloat_2</include>
-						<left>$PARAM[MWLeft]</left>
-						<top>$PARAM[MWTop]</top>
-						<width>50</width>
-						<height>50</height>
-						<texture colordiffuse="DDff0303">$VAR[watched_style]</texture>
-						<aspectratio aligny="bottom">stretch</aspectratio>
-					</control>
 				</control>
 			</control>
 		</definition>
@@ -1134,7 +1125,7 @@
 						<effect type="slide" start="$PARAM[MWLeftSt],$PARAM[MWTopSt]" end="0,0" delay="1000" time="$PARAM[MWTim]" tween="cubic" easing="inout" />
 						<effect type="fade" start="1" end="100" delay="$PARAM[MWFade]" time="250" />
 					</animation>
-					<visible>String.IsEmpty(Window(Home).Property(AnimWall2)) + String.IsEmpty(Window(Home).Property(MediaMenu))</visible>
+					<visible>String.IsEmpty(Window(Home).Property(AnimWall2)) + String.IsEmpty(Window(Home).Property(MediaMenu)) + String.IsEmpty(Window(Home).Property(HideWall))</visible>
 					<include>Animation_NewWallFloat_23D</include>
 					<left>$PARAM[MWLeft]</left>
 					<top>$PARAM[MWTop]</top>
@@ -1142,42 +1133,6 @@
 					<height>310</height>
 					<texture diffuse="tajo/mask_cover3.png" background="true">$INFO[Container(586).ListItemNoWrap($PARAM[MWPos]).Icon]</texture>
 					<aspectratio aligny="bottom">stretch</aspectratio>
-				</control>
-				<control type="group">
-					<left>170</left>
-					<control type="image">
-						<animation type="Visible" reversible="false">
-							<effect type="slide" start="$PARAM[MWLeftSt],$PARAM[MWTopSt]" end="0,0" delay="1000" time="$PARAM[MWTim]" tween="cubic" easing="inout" />
-							<effect type="fade" start="1" end="100" delay="$PARAM[MWFade]" time="250" />
-						</animation>
-						<visible>!String.IsEmpty(Window(home).Property(MediaMovie9)) + String.IsEmpty(Window(Home).Property(AnimWall2)) + String.IsEmpty(Window(Home).Property(MediaMenu)) + String.IsEqual(Container(586).ListItemNoWrap($PARAM[MWPos]).Overlay,OverlayWatched.png)</visible>
-						<include>Animation_NewWallFloat_23D</include>
-						<left>$PARAM[MWLeft]</left>
-						<top>$PARAM[MWTop]</top>
-						<width>50</width>
-						<height>50</height>
-						<texture colordiffuse="DDff0303">$VAR[watched_style]</texture>
-						<aspectratio aligny="bottom">stretch</aspectratio>
-					</control>
-				</control>
-				<control type="group">
-					<left>-2</left>
-					<top>-2</top>
-					<control type="image">
-						<animation type="Visible" reversible="false">
-							<effect type="slide" start="$PARAM[MWLeftSt],$PARAM[MWTopSt]" end="0,0" delay="1000" time="$PARAM[MWTim]" tween="cubic" easing="inout" />
-							<effect type="fade" start="1" end="100" delay="$PARAM[MWFade]" time="250" />
-						</animation>
-						<visible>!String.IsEmpty(Window(home).Property(MediaMovie9)) + String.IsEmpty(Window(Home).Property(AnimWall2)) + String.IsEmpty(Window(Home).Property(MediaMenu)) + !String.IsEmpty(Container(586).ListItemNoWrap($PARAM[MWPos]).Icon)</visible>
-						<include>Animation_NewWallFloat_23D</include>
-						<left>$PARAM[MWLeft]</left>
-						<top>$PARAM[MWTop]</top>
-						<width>224</width>
-						<height>314</height>
-						<colordiffuse>dd000000</colordiffuse>
-						<texture diffuse="tajo/mask_cover3.png">tajo/mask78.png</texture>
-						<aspectratio align="center">stretch</aspectratio>
-					</control>
 				</control>
 			</control>
 		</definition>
@@ -1381,13 +1336,6 @@
 		<param name="orderr" />
 		<param name="leftr" />
 		<definition>
-			<control type="image">
-				<width>80</width>
-				<height>150</height>
-				<left>$PARAM[leftr]</left>
-				<colordiffuse>01FFFFFF</colordiffuse>
-				<texture>$INFO[Window(Visualisation).Property(Artistslideshow.$PARAM[orderr].SimilarThumb)]</texture>
-			</control>
 			<control type="image">
 				<width>75</width>
 				<height>75</height>
@@ -1636,6 +1584,34 @@
 				<include>FlagImage</include>
 				<texture fallback="flags/flag_default.png">$VAR[mediaicons_path]aspectratio/$INFO[ListItem.VideoAspect,,.png]</texture>
 			</control>
+			<control type="group">
+				<visible>!ListItem.IsCollection + Control.IsVisible(596)</visible>
+				<left>784</left>
+				<top>15</top>
+				<width>450</width>
+				<height>50</height>
+				<control type="label">
+					<top>-10</top>
+					<width>70</width>
+					<visible>!String.IsEmpty(ListItem.Rating)</visible>
+					<align>left</align>
+					<aligny>center</aligny>
+					<font>font13_bold</font>
+					<label>[COLOR white][B]$INFO[ListItem.Rating][/B][/COLOR]</label>
+					<textcolor>FFFFFAF0</textcolor>
+				</control>
+				<control type="image">
+					<animation effect="fade" end="90" condition="true">Conditional</animation>
+					<top>-8</top>
+					<left>53</left>
+					<width>175</width>
+					<height>50</height>
+					<texture fallback="$VAR[styleratingstars,,0.png]">$VAR[styleratingstars]$INFO[ListItem.Rating,,.png]</texture>
+					<aspectratio align="left" aligny="center">stretch</aspectratio>
+					<colordiffuse>$VAR[colorratingstars]</colordiffuse>
+					<visible>!String.IsEqual(ListItem.Label,..)</visible>
+				</control>
+			</control>
 		</control>
 	</include>
 	<include name="Carat_movie">
@@ -1658,15 +1634,115 @@
 			<texture diffuse="tajo/shelf/diffuse_box.png" background="true">$VAR[poster]</texture>
 			<aspectratio>stretch</aspectratio>
 		</control>
+		<control type="image">
+			<!-- Poster -->
+			<visible>ListItem.IsCollection</visible>
+			<left>-94</left>
+			<top>168</top>
+			<width>240</width>
+			<height>339</height>
+			<texture diffuse="tajo/shelf/diffuse_box.png" background="true">$VAR[poster]</texture>
+			<aspectratio>stretch</aspectratio>
+		</control>
 		<include condition="Skin.HasSetting(extraposters)">CharacPos</include>
 		<control type="image">
 			<!-- Poster reflejo -->
-			<visible>ListItem.IsCollection</visible>
+			<visible>[ListItem.IsCollection + !Skin.HasSetting(extraposters)] | [ListItem.IsCollection + Skin.HasSetting(extraposters) + String.IsEmpty(ListItem.Art(poster1))]</visible>
 			<left>-94</left>
 			<top>512</top>
 			<width>241</width>
 			<height>338</height>
 			<texture flipy="true" diffuse="tajo/shelf/reflect_box_overlay.png" background="true">$VAR[poster]</texture>
+			<aspectratio>stretch</aspectratio>
+		</control>
+		<control type="image">
+			<left>115</left>
+			<top>168</top>
+			<width>40</width>
+			<height>40</height>
+			<texture colordiffuse="DDff0303">$VAR[watched_style]</texture>
+			<visible>String.IsEqual(ListItem.Overlay,OverlayWatched.png)</visible>
+		</control>
+		<control type="image">
+			<!-- Estuche -->
+			<left>-100</left>
+			<top>130</top>
+			<width>272</width>
+			<height>384</height>
+			<texture background="true">tajo/shelf/$VAR[GlobalCaseVarTajo]</texture>
+			<aspectratio>stretch</aspectratio>
+		</control>
+		<control type="image">
+			<!-- Estuche reflejo -->
+			<left>-100</left>
+			<top>503</top>
+			<width>272</width>
+			<height>384</height>
+			<texture flipy="true" diffuse="tajo/shelf/reflect_box_overlay.png" background="true">tajo/shelf/r$VAR[GlobalCaseVarTajo]</texture>
+			<aspectratio>stretch</aspectratio>
+		</control>
+	</include>
+	<include name="Carat_movie_list">
+		<control type="image">
+			<!-- Poster reflejo -->
+			<visible>[!ListItem.IsCollection + !Skin.HasSetting(extraposters)] | [!ListItem.IsCollection + Skin.HasSetting(extraposters) + String.IsEmpty(ListItem.Art(poster1))]</visible>
+			<left>-94</left>
+			<top>512</top>
+			<width>250</width>
+			<height>338</height>
+			<texture flipy="true" diffuse="tajo/shelf/reflect_box_overlay.png" background="true">$VAR[poster]</texture>
+			<aspectratio>stretch</aspectratio>
+		</control>
+		<control type="multiimage">
+			<!-- Poster reflejo -->
+			<visible>Skin.HasSetting(extraposters) + !String.IsEmpty(ListItem.Art(poster1))</visible>
+			<visible>!ListItem.IsCollection</visible>
+			<left>-94</left>
+			<top>512</top>
+			<width>250</width>
+			<height>338</height>
+			<imagepath flipy="true" diffuse="tajo/shelf/reflect_box_overlay.png" background="true">$INFO[Control.GetLabel(5905)]</imagepath>
+			<aspectratio>stretch</aspectratio>
+		</control>
+		<control type="image">
+			<!-- Poster reflejo -->
+			<visible>[ListItem.IsCollection + !Skin.HasSetting(extraposters)] | [ListItem.IsCollection + Skin.HasSetting(extraposters) + String.IsEmpty(ListItem.Art(poster1))]</visible>
+			<left>-94</left>
+			<top>512</top>
+			<width>241</width>
+			<height>338</height>
+			<texture flipy="true" diffuse="tajo/shelf/reflect_box_overlay.png" background="true">$VAR[poster]</texture>
+			<aspectratio>stretch</aspectratio>
+		</control>
+		<control type="multiimage">
+			<!-- Poster reflejo -->
+			<visible>Skin.HasSetting(extraposters) + !String.IsEmpty(ListItem.Art(poster1))</visible>
+			<visible>ListItem.IsCollection</visible>
+			<left>-94</left>
+			<top>512</top>
+			<width>241</width>
+			<height>338</height>
+			<imagepath flipy="true" diffuse="tajo/shelf/reflect_box_overlay.png" background="true">$INFO[Control.GetLabel(5905)]</imagepath>
+			<aspectratio>stretch</aspectratio>
+		</control>
+		<control type="image">
+			<visible>!ListItem.IsCollection</visible>
+			<left>-94</left>
+			<top>168</top>
+			<width>250</width>
+			<height>339</height>
+			<texture diffuse="tajo/shelf/diffuse_box.png" background="true">$VAR[poster]</texture>
+			<aspectratio>stretch</aspectratio>
+		</control>
+		<control type="multiimage">
+			<visible>Skin.HasSetting(extraposters) + !String.IsEmpty(ListItem.Art(poster1))</visible>
+			<visible>!ListItem.IsCollection</visible>
+			<left>-94</left>
+			<top>168</top>
+			<width>250</width>
+			<height>339</height>
+			<fadetime>250</fadetime>
+			<imagepath diffuse="tajo/shelf/diffuse_box.png" background="true">$INFO[Control.GetLabel(5905)]</imagepath>
 			<aspectratio>stretch</aspectratio>
 		</control>
 		<control type="image">
@@ -1677,6 +1753,17 @@
 			<width>240</width>
 			<height>339</height>
 			<texture diffuse="tajo/shelf/diffuse_box.png" background="true">$VAR[poster]</texture>
+			<aspectratio>stretch</aspectratio>
+		</control>
+		<!-- Poster -->
+		<control type="multiimage">
+			<visible>Skin.HasSetting(extraposters) + !String.IsEmpty(ListItem.Art(poster1))</visible>
+			<visible>ListItem.IsCollection</visible>
+			<left>-94</left>
+			<top>168</top>
+			<width>240</width>
+			<height>339</height>
+			<imagepath diffuse="tajo/shelf/diffuse_box.png" background="true">$INFO[Control.GetLabel(5905)]</imagepath>
 			<aspectratio>stretch</aspectratio>
 		</control>
 		<control type="image">
@@ -1711,7 +1798,7 @@
 			<visible>!ListItem.IsCollection + !Container.Content(tvshows) + !Container.Content(seasons) + [String.IsEqual(ListItem.DBType,movie) | Container.Content(episodes)]</visible>
 			<right>52</right>
 			<top>45</top>
-			<width>1470</width>
+			<width>720</width>
 			<height>45</height>
 			<font>font13_bold</font>
 			<align>right</align>
@@ -1719,6 +1806,9 @@
 			<textcolor>themecolor</textcolor>
 			<selectedcolor>themecolor</selectedcolor>
 			<shadowcolor>black</shadowcolor>
+			<scroll>true</scroll>
+			<scrollspeed>40</scrollspeed>
+			<scrollsuffix>  -  </scrollsuffix>
 			<label>[COLOR=white]$INFO[ListItem.Year]  |[/COLOR]  $VAR[value_ground16_label]: [COLOR=white]$VAR[ItemDuration]  |  [/COLOR][CAPITALIZE][LOWERCASE]$LOCALIZE[19081]:[/LOWERCASE][/CAPITALIZE][COLOR=FFFFFAF0] $INFO[ListItem.EndTime][/COLOR]</label>
 		</control>
 		<control type="label">
